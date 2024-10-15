@@ -17,6 +17,12 @@ try {
     $router->get('/suppliers/{id}', '\App\Controllers\SupplierController@single');
     $router->post('/suppliers/{id}', '\App\Controllers\SupplierController@update');
 
+    $router->get('/registration-form', '\App\Controllers\RegistrationController@showForm');
+    $router->post('/register', '\App\Controllers\RegistrationController@register');
+
+    $router->get('/login-form', '\App\Controllers\LoginController@showForm');
+    $router->post('/login', '\App\Controllers\LoginController@login');
+
     // Run it!
     $router->run();
 
