@@ -78,9 +78,9 @@
 
             <button type="submit" {{#disabled}}style="display:none;"{{/disabled}}>Login</button>
         </form>
-        {{#error}}
-        <p style="color:red;">{{error}}</p>
-        {{/error}}
+        {{#error_message}} <!-- Change variable to match controller -->
+        <p style="color:red;">{{error_message}}</p> <!-- Display error message -->
+        {{/error_message}}
         {{#disabled}}
         <p style="color:red;">Too many failed attempts. Please try again later.</p>
         {{/disabled}}
