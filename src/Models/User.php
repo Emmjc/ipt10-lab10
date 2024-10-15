@@ -81,4 +81,13 @@ class User extends BaseModel
 
         return false; // Authentication failed
     }
+    public function getAllUsers()
+    {
+        $sql = "SELECT id, first_name, last_name, email FROM users";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

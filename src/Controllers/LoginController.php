@@ -14,41 +14,56 @@ class LoginController
         $this->mustache = new Mustache_Engine();
     }
 
-    // Display the login form
-    public function showForm(): void
+    public function showForm()
     {
-        // Render the Mustache view for the login form
-        echo $this->mustache->render(file_get_contents(__DIR__ . '/../../views/login-form.mustache'), []);
+        session_start();
+        // Disable the form if there are too many attempts
+        $disabled = isset($_SESSION['attempts']) && $_SESSION['attempts'] >= 3;
+
+        echo $this->mustache->render(file_get_contents(__DIR__ . '/../../views/login-form.mustache'), ['disabled' => $disabled]);
     }
 
-    // Handle the login submission
-    public function login(): string
+    public function login()
     {
-        $usernameOrEmail = $_POST['username_or_email'];
-        $password = $_POST['password'];
+        session_start();
 
-        // Check required fields
-        if (empty($usernameOrEmail) || empty($password)) {
-            return "Username/Email and Password are required.";
+        if (!isset($_SESSION['attempts'])) {
+            $_SESSION['attempts'] = 0;
         }
 
-        // Assuming a User model exists with a method to validate user credentials
-        $user = new User();
+        if ($_SESSION['attempts'] >= 3) {
+            return $this->showForm(); // Show form disabled
+        }
 
-        // Fetch the user by username or email
-        $userData = $user->getUserByUsernameOrEmail($usernameOrEmail);
-        
-        if ($userData) {
-            // Verify the password against the hashed password stored in the database
-            if (password_verify($password, $userData['password_hash'])) {
-                session_start();
-                $_SESSION['user'] = $userData['username']; // Store user details in the session
-                return "Login successful. Welcome!";
-            } else {
-                return "Invalid username/email or password.";
-            }
+        $usernameOrEmail = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $userModel = new User();
+        $user = $userModel->login($usernameOrEmail, $password);
+
+        if ($user) {
+            // Successful login
+            $_SESSION['is_logged_in'] = true;
+            $_SESSION['user_id'] = $user['id'];
+            header("Location: /welcome");
+            exit();
         } else {
-            return "Invalid username/email or password.";
+            // Failed login
+            $_SESSION['attempts']++;
+            return $this->showForm(); // Show form with error
         }
     }
+
+    public function logout()
+    {
+        // Destroy the session
+        session_start(); // Start the session if not already active
+        session_unset(); // Remove all session variables
+        session_destroy(); // Destroy the session
+    
+        // Redirect to the login page
+        header("Location: /login-form");
+        exit(); // Ensure no further code is executed after redirection
+    }
+    
 }

@@ -14,12 +14,12 @@
             height: 100vh;
             margin: 0;
         }
-        .container {
+        div {
             background-color: white;
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 300px; /* Adjust the width as needed */
+            width: 400px;
         }
         h1 {
             text-align: center;
@@ -67,19 +67,23 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Login to Your Account</h1>
+    <div>
+        <h1>Login</h1>
         <form method="POST" action="/login">
-            <label for="username_or_email">Username or Email:</label>
-            <input type="text" id="username_or_email" name="username_or_email" required>
+            <label for="username">Username or Email:</label>
+            <input type="text" id="username" name="username" required {{#disabled}}disabled{{/disabled}}>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required {{#disabled}}disabled{{/disabled}}>
 
-            <button type="submit">Login</button>
+            <button type="submit" {{#disabled}}style="display:none;"{{/disabled}}>Login</button>
         </form>
-
-        <p>Don't have an account? <a href="/registration-form">Register here</a>.</p>
+        {{#error}}
+        <p style="color:red;">{{error}}</p>
+        {{/error}}
+        {{#disabled}}
+        <p style="color:red;">Too many failed attempts. Please try again later.</p>
+        {{/disabled}}
     </div>
 </body>
 </html>

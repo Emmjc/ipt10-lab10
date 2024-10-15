@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px; /* Set a maximum width for the table */
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a.logout {
+            background-color: red; /* Red background */
+            color: white; /* White text */
+            padding: 10px 15px; /* Padding for the button */
+            text-decoration: none; /* No underline */
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s; /* Smooth transition */
+        }
+        a.logout:hover {
+            background-color: darkred; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to IPT10</h1>
+    <h2>Registered Users:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#users}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{first_name}} {{last_name}}</td>
+                <td>{{email}}</td>
+            </tr>
+            {{/users}}
+        </tbody>
+    </table>
+    <a href="/logout" class="logout">Logout</a>
+</body>
+</html>

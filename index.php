@@ -23,6 +23,8 @@ try {
     $router->get('/login-form', '\App\Controllers\LoginController@showForm');
     $router->post('/login', '\App\Controllers\LoginController@login');
 
+    $router->get('/welcome', '\App\Controllers\WelcomeController@welcome');
+    $router->get('/logout', '\App\Controllers\LoginController@logout');
     // Run it!
     $router->run();
 
