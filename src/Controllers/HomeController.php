@@ -25,6 +25,6 @@ class HomeController extends BaseController
         $userModel = new User();
         $users = $userModel->getAllUsers(); // implement this method in User model
 
-        echo $this->mustache->render(file_get_contents(__DIR__ . '/../../views/welcome.mustache'), ['users' => $users]);
+        echo $this->mustache->render(file_get_contents(__DIR__ . '/../../views/home.mustache'), ['users' => $users]);
     }
 }
