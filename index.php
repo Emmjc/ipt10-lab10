@@ -12,7 +12,7 @@ try {
     $router = new \Bramus\Router\Router();
 
     // Define routes
-    $router->get('/', '\App\Controllers\HomeController@index');
+    $router->get('/', '\App\Controllers\WelcomeController@index');
     $router->get('/suppliers', '\App\Controllers\SupplierController@list');
     $router->get('/suppliers/{id}', '\App\Controllers\SupplierController@single');
     $router->post('/suppliers/{id}', '\App\Controllers\SupplierController@update');
@@ -23,7 +23,7 @@ try {
     $router->get('/login-form', '\App\Controllers\LoginController@showForm');
     $router->post('/login', '\App\Controllers\LoginController@login');
 
-    $router->get('/welcome', '\App\Controllers\WelcomeController@welcome');
+    $router->get('/welcome', '\App\Controllers\HomeController@welcome');
     $router->get('/logout', '\App\Controllers\LoginController@logout');
     // Run it!
     $router->run();

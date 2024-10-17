@@ -2,29 +2,23 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-use Mustache_Engine;
+use App\Models\Supplier;
+use App\Controllers\BaseController;
 
-class WelcomeController
+class WelcomeController extends BaseController
 {
-    private $mustache;
-
-    public function __construct()
+    
+    public function index()
     {
-        $this->mustache = new Mustache_Engine();
-    }
-
-    public function welcome()
-    {
-        session_start();
-        if (!isset($_SESSION['is_logged_in'])) {
-            header("Location: /login-form");
-            exit();
-        }
-
-        $userModel = new User();
-        $users = $userModel->getAllUsers(); // You'll need to implement this method in your User model
-
-        echo $this->mustache->render(file_get_contents(__DIR__ . '/../../views/welcome.mustache'), ['users' => $users]);
+        $template = 'home';
+        $data = [
+            'student' => 'Marcus Jeremy Mallari Cariño',
+            'title' => 'IPT10 Laboratory Activity #10',
+            'college' => 'College of Computer Studies',
+            'university' => 'Angeles University Foundation',
+            'location' => 'Angeles City, Pampanga, Philippines'
+        ];
+        $output = $this->render($template, $data);
+        return $output;
     }
 }
